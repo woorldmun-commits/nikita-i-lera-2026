@@ -1626,9 +1626,21 @@ function submitRsvp(e) {
       _captcha:  'false'
     })
   })
-  .finally(() => {
-    document.getElementById('rsvpForm').style.display = 'none';
-    document.getElementById('rsvpOk').style.display   = 'block';
+  .then(r => r.json())
+  .then(data => {
+    if (data.success === 'true' || data.success === true) {
+      document.getElementById('rsvpForm').style.display = 'none';
+      document.getElementById('rsvpOk').style.display   = 'block';
+    } else {
+      btn.disabled = false;
+      btn.textContent = 'Подтвердить';
+      alert('Ошибка отправки. Попробуйте ещё раз.');
+    }
+  })
+  .catch(() => {
+    btn.disabled = false;
+    btn.textContent = 'Подтвердить';
+    alert('Нет соединения. Проверьте интернет и попробуйте снова.');
   });
 }
 
