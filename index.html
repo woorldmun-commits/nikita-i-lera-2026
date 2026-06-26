@@ -1,0 +1,1658 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Никита &amp; Валерия — 14 августа 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Montserrat', sans-serif; background: #EDE4D3; color: #4A3322; overflow-x: hidden; }
+
+    :root {
+      --cream:  #EDE4D3;
+      --ivory:  #F6F1E9;
+      --terra:  #9B7A5A;
+      --sienna: #7A5540;
+      --gold:   #A8C8DA;
+      --lgold:  #C8DDE8;
+      --dark:   #1A2B38;
+      --mid:    #8B6A50;
+      --text:   #4A3322;
+      --blue:   #7AAEC2;
+      --bluel:  #B8D4E3;
+      --bluep:  #E0EDF5;
+    }
+
+    /* ── NEW ANIMATIONS ───────────────────────────────────── */
+    @keyframes shimmerText {
+      0%   { background-position: -200% center; }
+      100% { background-position:  200% center; }
+    }
+    @keyframes floatOrb {
+      0%,100% { transform: translateY(0) scale(1);   opacity: .18; }
+      33%     { transform: translateY(-28px) scale(1.1); opacity: .28; }
+      66%     { transform: translateY(14px)  scale(.95); opacity: .14; }
+    }
+    @keyframes pulseRing {
+      0%   { box-shadow: 0 0 0 0 rgba(168,200,218,.55); }
+      70%  { box-shadow: 0 0 0 10px rgba(168,200,218,0); }
+      100% { box-shadow: 0 0 0 0 rgba(168,200,218,0); }
+    }
+    @keyframes gradientDrift {
+      0%,100% { background-position: 0% 50%;   }
+      50%     { background-position: 100% 50%;  }
+    }
+    @keyframes petalDrift {
+      0%   { transform: translateY(0) rotate(0deg) scale(1);    opacity: 0; }
+      10%  { opacity: .55; }
+      90%  { opacity: .35; }
+      100% { transform: translateY(-120vh) rotate(360deg) scale(.8); opacity: 0; }
+    }
+    @keyframes softGlow {
+      0%,100% { opacity: .35; }
+      50%     { opacity: .65; }
+    }
+
+    /* ── EDIT BAR ─────────────────────────────────────────── */
+    #editBar {
+      position: fixed; top: 14px; right: 14px; z-index: 9999;
+      display: flex; gap: 8px; align-items: center;
+      background: rgba(255,255,255,.93); border-radius: 30px;
+      padding: 8px 18px; box-shadow: 0 2px 18px rgba(0,0,0,.13);
+    }
+    #editBar button {
+      background: var(--terra); color: #fff; border: none;
+      padding: 7px 18px; border-radius: 20px; cursor: pointer;
+      font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 500;
+      transition: background .2s; letter-spacing: .05em;
+    }
+    #editBar button:hover { background: var(--sienna); }
+    #saveBtn { background: #6b9c7a !important; }
+    #saveBtn:hover { background: #4d7a5c !important; }
+    #editBar .status { font-size: 11px; color: #999; font-family: 'Montserrat', sans-serif; }
+    body.editing [contenteditable] {
+      outline: 2px dashed rgba(201,149,106,.5); outline-offset: 3px; cursor: text;
+    }
+    body.editing [contenteditable]:focus {
+      outline: 2px solid var(--terra); background: rgba(255,255,255,.85);
+    }
+
+    /* ── REVEAL ANIMATIONS ────────────────────────────────── */
+    .reveal, .reveal-l, .reveal-r {
+      opacity: 0;
+      transition: opacity 1s ease, transform 1s ease, filter 1s ease;
+    }
+    .reveal       { transform: translateY(40px); filter: blur(4px); }
+    .reveal-l     { transform: translateX(-52px); filter: blur(3px); }
+    .reveal-r     { transform: translateX(52px);  filter: blur(3px); }
+    .reveal.on, .reveal-l.on, .reveal-r.on { opacity: 1; transform: none; filter: blur(0); }
+    .d1 { transition-delay: .14s; } .d2 { transition-delay: .28s; }
+    .d3 { transition-delay: .44s; } .d4 { transition-delay: .60s; }
+    .d5 { transition-delay: .76s; }
+
+    /* ── INTRO SCREEN ─────────────────────────────────────── */
+    #intro {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 1000;
+      background: var(--dark);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      transition: opacity .6s ease;
+      text-decoration: none; color: inherit;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+      cursor: pointer;
+    }
+    #intro.gone { opacity: 0; pointer-events: none; display: none; }
+    @media (max-width: 768px) {
+      #intro.gone { display: none !important; }
+    }
+
+    .env-glow {
+      position: absolute; width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(168,200,218,.18) 0%, transparent 70%);
+      animation: pulse 3s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:.4} 50%{opacity:1} }
+
+    .env-wrap { position: relative; margin-bottom: 36px; animation: floatUp 3s ease-in-out infinite; }
+    @keyframes floatUp { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+
+    .intro-pre {
+      font-family: 'Montserrat', sans-serif; font-weight: 300;
+      letter-spacing: .45em; color: rgba(255,255,255,.4);
+      font-size: 12px; text-transform: uppercase; margin-bottom: 18px;
+    }
+    .intro-name {
+      font-family: 'Cormorant Garamond', serif; font-weight: 300;
+      font-size: clamp(32px, 7vw, 64px); color: var(--gold);
+      letter-spacing: .12em; margin-bottom: 52px;
+    }
+    .intro-hint {
+      font-family: 'Montserrat', sans-serif; font-weight: 300;
+      font-size: 12px; color: rgba(255,255,255,.25);
+      letter-spacing: .25em; text-transform: uppercase;
+      animation: blink 2.5s ease-in-out infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:.25} 50%{opacity:.6} }
+    .intro-open-btn {
+      margin-top: 40px;
+      padding: 16px 48px;
+      background: transparent;
+      border: 1px solid rgba(168,200,218,.45);
+      border-radius: 60px;
+      color: var(--gold);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px; font-weight: 400;
+      letter-spacing: .3em; text-transform: uppercase;
+      cursor: pointer;
+      pointer-events: auto;
+    }
+
+    /* ── MAIN ─────────────────────────────────────────────── */
+    #main { opacity: 0; transition: opacity .8s ease; }
+    #main.on { opacity: 1; }
+
+    /* ── HERO ─────────────────────────────────────────────── */
+    #hero {
+      min-height: 100vh; position: relative;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+      background: var(--dark);
+    }
+    #hero-bg {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center 30%;
+      filter: brightness(.5) saturate(.85);
+      transform: scale(1.06);
+      transition: transform 7s ease-out;
+    }
+    #hero-bg.loaded { transform: scale(1); }
+    #hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg,
+        rgba(26,43,56,.30) 0%,
+        rgba(26,43,56,.15) 50%,
+        rgba(26,43,56,.72) 100%);
+    }
+    #particleCanvas { position: absolute; inset: 0; pointer-events: none; }
+
+    .hero-body {
+      position: relative; z-index: 2;
+      text-align: center; padding: 24px 20px;
+    }
+    .hero-pre {
+      font-family: 'Montserrat', sans-serif; font-weight: 300;
+      letter-spacing: .5em; color: rgba(255,255,255,.55);
+      font-size: clamp(10px, 1.4vw, 13px); text-transform: uppercase; margin-bottom: 22px;
+    }
+    .hero-n1, .hero-n2 {
+      display: block;
+      font-family: 'Cormorant Garamond', serif; font-weight: 300;
+      font-size: clamp(56px, 11vw, 128px); color: #fff;
+      line-height: .95; letter-spacing: .07em;
+    }
+    .hero-amp {
+      display: block;
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(44px, 8vw, 92px);
+      color: var(--gold); margin: 4px 0;
+    }
+    .hero-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(15px, 2vw, 20px);
+      color: rgba(255,255,255,.62); letter-spacing: .4em;
+      text-transform: uppercase; margin-top: 28px; font-weight: 300;
+    }
+    .hero-tag {
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: clamp(16px, 2vw, 22px);
+      color: var(--gold); margin-top: 14px; letter-spacing: .04em;
+    }
+
+    .hero-scroll {
+      position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      color: rgba(255,255,255,.3); font-size: 10px;
+      letter-spacing: .35em; text-transform: uppercase;
+      font-family: 'Montserrat', sans-serif; font-weight: 300;
+    }
+    .scroll-bar {
+      width: 1px; height: 50px; overflow: hidden;
+      background: rgba(255,255,255,.12); position: relative;
+    }
+    .scroll-bar::after {
+      content: ''; position: absolute; top: 0; left: 0;
+      width: 100%; height: 50%; background: rgba(255,255,255,.5);
+      animation: scrollDown 2s ease-in-out infinite;
+    }
+    @keyframes scrollDown { 0%{top:-50%} 100%{top:150%} }
+
+    /* ── RINGS ────────────────────────────────────────────── */
+    #sec-rings {
+      min-height: 100vh; position: relative;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    #rings-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 25% 35%, rgba(168,200,218,.55) 0%, transparent 55%),
+        radial-gradient(ellipse at 75% 65%, rgba(155,122,90,.35) 0%, transparent 55%),
+        radial-gradient(ellipse at 50% 50%, rgba(200,221,232,.3) 0%, transparent 70%),
+        linear-gradient(145deg, #E8F2F8 0%, #F0E8DC 55%, #D8EAF4 100%);
+      background-size: 200% 200%;
+      animation: gradientDrift 9s ease infinite;
+    }
+    #rings-overlay { display: none; }
+
+    @keyframes ringBreath {
+      0%,100% { transform: scale(1) rotate(0deg); }
+      50%     { transform: scale(1.025) rotate(1deg); }
+    }
+    @keyframes ringBreath2 {
+      0%,100% { transform: scale(1) rotate(0deg); }
+      50%     { transform: scale(1.025) rotate(-1deg); }
+    }
+    .liquid-rings-svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .rings-body {
+      position: relative; z-index: 2;
+      text-align: center; padding: 40px 20px;
+      max-width: 600px;
+    }
+    .rings-script {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(42px, 7vw, 80px);
+      color: var(--sienna); margin-bottom: 10px;
+    }
+    .rings-counter {
+      font-family: 'Montserrat', sans-serif; font-weight: 300;
+      font-size: 12px; letter-spacing: .45em; text-transform: uppercase;
+      color: var(--mid); margin-bottom: 36px;
+    }
+    .rings-rule {
+      width: 70px; height: 1px; background: var(--terra);
+      margin: 0 auto 36px;
+    }
+    .rings-quote {
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: clamp(18px, 2.5vw, 26px);
+      color: var(--text); line-height: 1.85;
+    }
+
+    /* ── SECTION COMMONS ──────────────────────────────────── */
+    .sec-eyebrow {
+      font-family: 'Montserrat', sans-serif; font-weight: 300;
+      font-size: 11px; letter-spacing: .45em; text-transform: uppercase;
+      text-align: center; margin-bottom: 14px;
+      color: var(--terra);
+    }
+    .sec-title {
+      font-family: 'Cormorant Garamond', serif; font-weight: 300;
+      font-size: clamp(36px, 6vw, 68px);
+      text-align: center; line-height: 1.1; margin-bottom: 14px;
+      color: var(--dark);
+    }
+    /* shimmer variant used on dark-bg sections */
+    .sec-title.shimmer {
+      background: linear-gradient(90deg, var(--bluel) 0%, #fff 40%, var(--bluel) 60%, var(--gold) 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmerText 4s linear infinite;
+    }
+    .sec-sub {
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: clamp(16px, 2vw, 20px);
+      text-align: center; color: var(--mid);
+      max-width: 520px; margin: 0 auto 64px; line-height: 1.8;
+    }
+
+    /* ── CHILDHOOD ────────────────────────────────────────── */
+    #sec-childhood {
+      padding: 100px 20px; overflow: hidden;
+      background: linear-gradient(180deg, var(--cream) 0%, #EAF2F8 50%, var(--cream) 100%);
+    }
+
+    .child-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 48px 60px; max-width: 860px; margin: 0 auto;
+      align-items: start;
+    }
+    .child-col { display: flex; flex-direction: column; gap: 24px; }
+    .child-label {
+      font-family: 'Great Vibes', cursive; font-size: 38px;
+      color: var(--terra); text-align: center; margin-bottom: 4px;
+    }
+    .polaroid {
+      background: #fff; padding: 11px 11px 44px;
+      box-shadow: 3px 6px 24px rgba(0,0,0,.11); position: relative;
+    }
+    .polaroid img {
+      width: 100%; display: block;
+      aspect-ratio: 3/4; object-fit: cover;
+    }
+    .pol-cap {
+      position: absolute; bottom: 10px; left: 0; right: 0;
+      text-align: center;
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: 14px; color: #aaa;
+    }
+    .pol-tl  { transform: rotate(-5deg); }
+    .pol-tr  { transform: rotate(4deg); margin-top: 36px; }
+    .pol-bl  { transform: rotate(3deg); }
+    .pol-br  { transform: rotate(-4deg); margin-top: 16px; }
+
+    .bridge {
+      text-align: center; margin-top: 64px;
+      grid-column: 1 / -1;
+    }
+    .bridge-rule { width: 1px; height: 56px; background: var(--terra); margin: 0 auto 22px; }
+    .bridge-text {
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: clamp(18px, 2.5vw, 26px); color: var(--text);
+      max-width: 460px; margin: 0 auto; line-height: 1.75;
+    }
+    .bridge-year {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(64px, 12vw, 120px);
+      color: var(--lgold); font-weight: 300; line-height: 1; margin-top: 12px;
+    }
+
+    /* ── FISHEYE PORTALS ─────────────────────────────────── */
+    .fisheye-row {
+      display: flex; justify-content: center; align-items: center;
+      gap: clamp(20px, 5vw, 56px); margin: 56px auto 64px;
+      max-width: 760px; flex-wrap: wrap;
+    }
+    .fisheye-portal {
+      width: clamp(180px, 26vw, 280px);
+      height: clamp(180px, 26vw, 280px);
+      border-radius: 50%; overflow: hidden; position: relative; flex-shrink: 0;
+      box-shadow:
+        0 0 0 2px rgba(168,200,218,.55),
+        0 0 0 10px rgba(168,200,218,.12),
+        0 28px 72px rgba(26,43,56,.18);
+      transition: box-shadow .5s ease, transform .5s ease;
+    }
+    .fisheye-portal:hover {
+      transform: scale(1.04);
+      box-shadow:
+        0 0 0 3px rgba(168,200,218,.8),
+        0 0 0 14px rgba(168,200,218,.18),
+        0 36px 88px rgba(26,43,56,.28);
+    }
+    .fisheye-portal img {
+      width: 116%; height: 116%; margin: -8%;
+      object-fit: cover; border-radius: 50%;
+      filter: saturate(1.08) contrast(1.03);
+      transition: transform .7s ease;
+    }
+    .fisheye-portal:hover img { transform: scale(1.08); }
+    /* glass lens shine */
+    .fisheye-portal::before {
+      content: ''; position: absolute; inset: 0; z-index: 2;
+      border-radius: 50%; pointer-events: none;
+      background: radial-gradient(circle at 33% 26%,
+        rgba(255,255,255,.32) 0%, rgba(255,255,255,.08) 28%, transparent 58%);
+    }
+    /* outer glow ring */
+    .fisheye-portal::after {
+      content: ''; position: absolute; inset: -8px; z-index: 3;
+      border-radius: 50%; pointer-events: none;
+      border: 1px solid rgba(168,200,218,.28);
+      animation: softGlow 3.2s ease-in-out infinite;
+    }
+    /* single large portal */
+    .fisheye-solo {
+      width: clamp(200px, 30vw, 320px);
+      height: clamp(200px, 30vw, 320px);
+      margin: 0 auto;
+    }
+
+    /* ── STORY ────────────────────────────────────────────── */
+    #sec-story {
+      padding: 120px 20px 140px;
+      overflow: hidden; position: relative;
+      background: linear-gradient(180deg, var(--cream) 0%, #EAF2F8 50%, var(--cream) 100%);
+    }
+    #sec-story .sec-eyebrow { color: var(--terra); }
+    #sec-story .sec-title   { color: var(--dark); }
+
+    .story-ornament { text-align: center; margin-bottom: 56px; }
+
+    .story-prose {
+      max-width: 620px; margin: 0 auto;
+      text-align: center;
+    }
+    .story-p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(18px, 2.4vw, 23px);
+      color: var(--text); line-height: 2;
+      margin-bottom: 32px;
+    }
+    .story-p em { font-style: italic; color: var(--sienna); }
+
+    .story-big-quote {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(48px, 7vw, 80px);
+      color: var(--terra);
+      display: block; margin: 40px 0;
+      line-height: 1;
+    }
+
+    .story-rule {
+      display: flex; align-items: center;
+      gap: 16px; margin: 40px auto;
+      max-width: 260px;
+    }
+    .story-rule-line { flex: 1; height: 1px; background: var(--lgold); }
+    .story-rule-dot  { width: 6px; height: 6px; border-radius: 50%; background: var(--terra); flex-shrink: 0; }
+
+    .story-closing {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(19px, 2.6vw, 26px);
+      color: var(--sienna); line-height: 1.85;
+      margin-top: 40px;
+    }
+    .story-flame {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(17px, 2vw, 22px);
+      color: var(--mid); font-style: italic;
+      margin-top: 24px; letter-spacing: .03em;
+    }
+
+    /* ── GALLERY ──────────────────────────────────────────── */
+    #sec-gallery { padding: 100px 0; background: var(--dark); overflow: hidden; position: relative; }
+    #sec-gallery .sec-eyebrow { color: var(--gold); }
+    #sec-gallery .sec-title   { color: #fff; } /* overridden by .shimmer */
+    #sec-gallery .sec-sub     { color: rgba(255,255,255,.4); }
+    #sec-gallery .sec-eyebrow,
+    #sec-gallery .sec-title,
+    #sec-gallery .sec-sub     { padding: 0 20px; }
+
+    .g-wrap { overflow: hidden; margin-top: 48px; position: relative; }
+    .g-track {
+      display: flex; gap: 18px; padding: 20px 40px;
+      overflow-x: auto; scrollbar-width: none;
+      cursor: grab;
+    }
+    .g-track:active { cursor: grabbing; }
+    .g-track::-webkit-scrollbar { display: none; }
+    .g-slide {
+      flex-shrink: 0; width: 300px; position: relative; overflow: hidden;
+    }
+    .g-slide img {
+      width: 100%; height: 400px; object-fit: cover; display: block;
+      transition: transform .5s ease;
+    }
+    .g-slide:hover img { transform: scale(1.05); }
+    .g-shade {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(26,43,56,.65) 0%, transparent 55%);
+      opacity: 0; transition: opacity .3s;
+    }
+    .g-slide:hover .g-shade { opacity: 1; }
+    .g-hint {
+      text-align: center; margin-top: 22px; padding: 0 20px;
+      font-family: 'Montserrat', sans-serif; font-size: 11px;
+      letter-spacing: .3em; color: rgba(255,255,255,.25); font-weight: 300;
+    }
+
+    /* ── INVITE ───────────────────────────────────────────── */
+    #sec-invite {
+      padding: 120px 20px; text-align: center;
+      background: linear-gradient(135deg, var(--ivory) 0%, #D8EAF4 50%, var(--ivory) 100%);
+      background-size: 300% 300%;
+      animation: gradientDrift 10s ease infinite;
+    }
+    .inv-orn { width: 110px; margin: 0 auto 36px; }
+    .inv-title {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(34px, 6vw, 60px);
+      color: var(--sienna); margin-bottom: 28px;
+    }
+    .inv-divider {
+      display: flex; align-items: center; gap: 14px;
+      justify-content: center; margin: 0 auto 40px; max-width: 260px;
+    }
+    .inv-divider-line { flex: 1; height: 1px; background: var(--terra); }
+    .inv-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(18px, 2.5vw, 24px);
+      color: var(--text); max-width: 620px; margin: 0 auto; line-height: 1.95;
+    }
+    .inv-text em { color: var(--terra); font-style: normal; }
+    .inv-sig {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(30px, 4vw, 50px);
+      color: var(--sienna); margin-top: 48px;
+    }
+
+    /* ── DATE ─────────────────────────────────────────────── */
+    #sec-date {
+      padding: 100px 20px; background: var(--dark); text-align: center; position: relative;
+    }
+    #sec-date .sec-eyebrow { color: var(--gold); }
+    .date-num {
+      display: block;
+      font-family: 'Cormorant Garamond', serif; font-weight: 300;
+      font-size: clamp(90px, 18vw, 200px); color: var(--gold); line-height: 1;
+    }
+    .date-my {
+      font-family: 'Cormorant Garamond', serif; font-weight: 300;
+      font-size: clamp(22px, 4vw, 44px);
+      letter-spacing: .28em; text-transform: uppercase; color: rgba(255,255,255,.65);
+    }
+
+    .countdown {
+      display: flex; gap: clamp(12px, 4vw, 48px);
+      justify-content: center; align-items: flex-start; margin-top: 60px;
+    }
+    .cd-block { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+    .cd-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(38px, 6vw, 68px); color: #fff; font-weight: 300;
+      line-height: 1; min-width: 2ch; text-align: center;
+    }
+    .cd-lbl {
+      font-family: 'Montserrat', sans-serif; font-size: 10px;
+      letter-spacing: .25em; color: rgba(255,255,255,.28); text-transform: uppercase; font-weight: 300;
+    }
+    .cd-sep {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 42px; color: rgba(255,255,255,.18); margin-top: 8px;
+    }
+
+    .cal-box {
+      max-width: 360px; margin: 64px auto 0;
+      border: 1px solid rgba(255,255,255,.07); padding: 24px;
+    }
+    .cal-title {
+      font-family: 'Cormorant Garamond', serif; font-weight: 300;
+      font-size: 20px; letter-spacing: .22em; text-transform: uppercase;
+      color: rgba(255,255,255,.4); margin-bottom: 18px;
+    }
+    .cal-head {
+      display: grid; grid-template-columns: repeat(7,1fr); margin-bottom: 6px;
+    }
+    .cal-head span {
+      font-family: 'Montserrat', sans-serif; font-size: 10px;
+      letter-spacing: .05em; color: rgba(255,255,255,.22);
+      text-align: center; padding: 4px;
+    }
+    .cal-body { display: grid; grid-template-columns: repeat(7,1fr); gap: 3px; }
+    .c-day {
+      aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+      font-family: 'Montserrat', sans-serif; font-size: 12px;
+      color: rgba(255,255,255,.3); font-weight: 300; border-radius: 50%;
+    }
+    .c-day.hi {
+      background: var(--gold); color: var(--dark); font-weight: 600;
+      font-size: 13px; box-shadow: 0 0 18px rgba(168,200,218,.45);
+      animation: softGlow 2.5s ease-in-out infinite;
+    }
+
+    /* ── VENUE ────────────────────────────────────────────── */
+    #sec-venue {
+      padding: 100px 20px; text-align: center;
+      background: linear-gradient(180deg, var(--ivory) 0%, #E4EFF6 60%, var(--ivory) 100%);
+    }
+    .venue-name {
+      font-family: 'Cormorant Garamond', serif; font-weight: 300;
+      font-size: clamp(26px, 4.5vw, 50px); color: var(--dark); margin-bottom: 12px;
+    }
+    .venue-addr {
+      font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 300;
+      color: var(--mid); letter-spacing: .08em; margin-bottom: 36px; line-height: 1.9;
+    }
+    .venue-btn {
+      display: inline-block; border: 1px solid var(--terra); color: var(--terra);
+      padding: 12px 36px; font-family: 'Montserrat', sans-serif; font-size: 12px;
+      font-weight: 500; letter-spacing: .22em; text-transform: uppercase;
+      text-decoration: none; transition: all .22s;
+    }
+    .venue-btn:hover { background: var(--terra); color: #fff; }
+
+    /* ── BOKEH ORBS on dark sections ─────────────────────── */
+    .bokeh-wrap {
+      position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0;
+    }
+    .orb {
+      position: absolute; border-radius: 50%;
+      background: radial-gradient(circle, rgba(168,200,218,.22) 0%, transparent 70%);
+      animation: floatOrb var(--dur,8s) ease-in-out infinite;
+      animation-delay: var(--del,0s);
+    }
+
+    /* ── TIMELINE ─────────────────────────────────────────── */
+    #sec-timing {
+      padding: 100px 20px;
+      background: linear-gradient(180deg, var(--cream) 0%, #EAF2F8 50%, var(--cream) 100%);
+    }
+
+    .timeline {
+      list-style: none; max-width: 620px; margin: 64px auto 0; position: relative;
+    }
+    .timeline::before {
+      content: ''; position: absolute;
+      left: 74px; top: 12px; bottom: 12px; width: 1px;
+      background: linear-gradient(to bottom, transparent, var(--terra) 8%, var(--terra) 92%, transparent);
+    }
+    .tl-row {
+      display: grid; grid-template-columns: 74px 44px 1fr;
+      padding-bottom: 48px; align-items: start;
+    }
+    .tl-time {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(18px, 2.5vw, 22px); color: var(--mid);
+      font-weight: 600; text-align: right; padding-top: 3px;
+    }
+    .tl-mid {
+      display: flex; justify-content: center; padding-top: 11px;
+    }
+    .tl-dot {
+      width: 14px; height: 14px; background: var(--terra); border-radius: 50%;
+      border: 3px solid var(--cream); box-shadow: 0 0 0 2px var(--terra);
+      flex-shrink: 0; position: relative; z-index: 1;
+      animation: pulseRing 2.4s ease-out infinite;
+    }
+    .tl-body { padding-left: 14px; }
+    .tl-emoji { font-size: 22px; margin-bottom: 6px; display: block; }
+    .tl-ev {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(19px, 2.5vw, 24px); color: var(--dark); margin-bottom: 4px;
+    }
+    .tl-desc {
+      font-family: 'Montserrat', sans-serif; font-size: 12px;
+      color: var(--mid); font-weight: 300; line-height: 1.65;
+    }
+
+    /* ── RSVP ─────────────────────────────────────────────── */
+    /* ── DRESSCODE ────────────────────────────────────────── */
+    #sec-dresscode { padding: 100px 20px; background: var(--dark); text-align: center; }
+    #sec-dresscode .sec-eyebrow { color: var(--gold); }
+    #sec-dresscode .sec-title   { color: #fff; }
+    #sec-dresscode .sec-sub     { color: rgba(255,255,255,.45); margin-bottom: 48px; }
+
+    .dc-note {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(17px, 2.2vw, 22px);
+      color: rgba(255,255,255,.6); line-height: 1.9;
+      max-width: 580px; margin: 0 auto 56px;
+    }
+    .dc-note em { color: var(--gold); font-style: italic; }
+
+    .palette {
+      display: flex; justify-content: center;
+      gap: clamp(10px, 2.5vw, 22px); flex-wrap: wrap;
+      max-width: 680px; margin: 0 auto 40px;
+    }
+    .swatch-wrap {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 10px;
+    }
+    .swatch {
+      width: clamp(64px, 10vw, 88px);
+      height: clamp(88px, 14vw, 120px);
+      border-radius: 100px;
+      flex-shrink: 0;
+    }
+    .swatch-name {
+      font-family: 'Montserrat', sans-serif; font-size: 10px;
+      font-weight: 300; letter-spacing: .12em;
+      color: rgba(255,255,255,.3); text-transform: uppercase;
+    }
+
+    .dc-avoid {
+      font-family: 'Montserrat', sans-serif; font-size: 12px;
+      font-weight: 300; letter-spacing: .15em; text-transform: uppercase;
+      color: rgba(255,255,255,.2); margin-top: 12px;
+    }
+    .dc-avoid span { color: rgba(255,255,255,.45); }
+
+    #sec-rsvp { padding: 100px 20px; background: var(--dark); text-align: center; }
+    #sec-rsvp .sec-eyebrow { color: var(--gold); }
+    #sec-rsvp .sec-title   { color: #fff; }
+    #sec-rsvp .sec-sub     { color: rgba(255,255,255,.38); }
+
+    .rsvp-deadline {
+      font-family: 'Montserrat', sans-serif; font-size: 12px;
+      letter-spacing: .25em; text-transform: uppercase;
+      color: var(--gold); font-weight: 300; margin-bottom: 44px;
+    }
+    .rsvp-form { max-width: 440px; margin: 0 auto; }
+    .rsvp-inp {
+      width: 100%; padding: 14px 16px; margin-bottom: 10px;
+      background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.09);
+      color: #fff; font-family: 'Montserrat', sans-serif;
+      font-size: 13px; font-weight: 300; outline: none; transition: border-color .2s;
+    }
+    .rsvp-inp::placeholder { color: rgba(255,255,255,.22); }
+    .rsvp-inp:focus { border-color: var(--gold); }
+    .rsvp-row { display: flex; gap: 10px; margin-bottom: 10px; }
+    .rsvp-opt {
+      flex: 1; padding: 13px; background: transparent;
+      border: 1px solid rgba(255,255,255,.12); color: rgba(255,255,255,.35);
+      font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 500;
+      letter-spacing: .12em; text-transform: uppercase; cursor: pointer; transition: all .2s;
+    }
+    .rsvp-opt.sel, .rsvp-opt:hover { border-color: var(--gold); color: var(--gold); }
+    .rsvp-go {
+      width: 100%; padding: 15px; background: var(--gold); color: var(--dark);
+      border: none; font-family: 'Montserrat', sans-serif; font-size: 12px;
+      font-weight: 600; letter-spacing: .28em; text-transform: uppercase;
+      cursor: pointer; margin-top: 6px; transition: background .2s;
+    }
+    .rsvp-go:hover { background: var(--terra); color: #fff; }
+    .rsvp-ok {
+      font-family: 'Great Vibes', cursive; font-size: 46px;
+      color: var(--gold); display: none; margin-top: 24px;
+    }
+
+    /* ── FOOTER ───────────────────────────────────────────── */
+    footer {
+      padding: 60px 20px; background: var(--dark);
+      border-top: 1px solid rgba(255,255,255,.04); text-align: center;
+    }
+    .ft-names {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(32px, 5vw, 54px); color: var(--gold); margin-bottom: 14px;
+    }
+    .ft-heart { color: var(--terra); font-size: 18px; margin-bottom: 14px; }
+    .ft-date {
+      font-family: 'Montserrat', sans-serif; font-size: 11px;
+      letter-spacing: .38em; color: rgba(255,255,255,.2); font-weight: 300;
+    }
+
+    /* ── RESPONSIVE ───────────────────────────────────────── */
+    @media (max-width: 768px) {
+      #editBar { display: none; }
+      .child-grid { grid-template-columns: 1fr; gap: 36px; }
+      .bridge { grid-column: unset; }
+      /* Skip ALL scroll-reveal animations — show everything immediately */
+      #main { opacity: 1 !important; transition: none !important; }
+      .reveal, .reveal-l, .reveal-r {
+        opacity: 1 !important;
+        transform: none !important;
+        filter: none !important;
+        transition: none !important;
+      }
+    }
+
+    @media (max-width: 640px) {
+      /* ─ Global ─ */
+      body { -webkit-text-size-adjust: 100%; }
+
+      /* ─ Sections padding ─ */
+      #sec-childhood, #sec-story, #sec-gallery,
+      #sec-invite, #sec-date, #sec-venue,
+      #sec-timing, #sec-dresscode, #sec-rsvp {
+        padding: 64px 16px;
+      }
+      #sec-story { padding: 72px 16px 80px; }
+
+      /* ─ Section eyebrow / title / sub ─ */
+      .sec-eyebrow { font-size: 12px; letter-spacing: .28em; margin-bottom: 10px; }
+      .sec-sub { margin-bottom: 40px; font-size: 15px; }
+
+      /* ─ Hero ─ */
+      .hero-pre { letter-spacing: .28em; font-size: 10px; }
+      .hero-sub { letter-spacing: .2em; font-size: 14px; margin-top: 20px; }
+      .hero-tag { font-size: 16px; margin-top: 10px; }
+      .hero-scroll { bottom: 20px; }
+
+      /* ─ Rings ─ */
+      .rings-body { padding: 32px 20px; }
+      .rings-script { font-size: 38px; }
+      .rings-counter { font-size: 11px; letter-spacing: .28em; }
+      .rings-quote { font-size: 16px; line-height: 1.9; }
+
+      /* ─ Childhood ─ */
+      .child-grid {
+        grid-template-columns: 1fr;
+        gap: 32px; max-width: 340px; margin: 0 auto;
+      }
+      .child-col { gap: 20px; }
+      .child-label { font-size: 30px; }
+      .bridge { grid-column: unset; margin-top: 40px; }
+      .bridge-year { font-size: 72px; }
+      .bridge-text { font-size: 17px; }
+      .pol-tl, .pol-bl, .pol-tr, .pol-br { transform: none !important; }
+      .polaroid { padding: 8px 8px 36px; }
+
+      /* ─ Story ─ */
+      .story-prose { max-width: 100%; }
+      .story-p { font-size: 17px; line-height: 1.9; margin-bottom: 24px; }
+      .story-big-quote { font-size: 52px; margin: 28px 0; }
+      .story-closing { font-size: 17px; }
+      .story-flame { font-size: 15px; }
+
+      /* ─ Gallery ─ */
+      #sec-gallery { padding: 64px 0; }
+      .g-slide { width: 220px; }
+      .g-slide img { height: 290px; }
+      .g-track { padding: 16px 20px; gap: 12px; }
+      .g-hint { font-size: 10px; }
+
+      /* ─ Invite ─ */
+      .inv-title { font-size: 32px; }
+      .inv-text { font-size: 17px; line-height: 1.85; }
+      .inv-sig { font-size: 30px; margin-top: 32px; }
+      .inv-orn { width: 80px; margin-bottom: 24px; }
+
+      /* ─ Date / countdown ─ */
+      .countdown { gap: 10px; margin-top: 40px; }
+      .cd-num { font-size: 36px; }
+      .cd-lbl { font-size: 9px; }
+      .cd-sep { font-size: 28px; }
+      .date-my { font-size: 20px; letter-spacing: .14em; }
+      .cal-box { margin-top: 40px; padding: 18px; }
+
+      /* ─ Venue ─ */
+      .venue-name { font-size: 22px; }
+      .venue-addr { font-size: 13px; }
+      .venue-btn { padding: 14px 28px; font-size: 12px; min-height: 44px; }
+
+      /* ─ Timeline ─ */
+      .timeline { margin-top: 44px; }
+      .timeline::before { left: 56px; }
+      .tl-row {
+        grid-template-columns: 56px 36px 1fr;
+        padding-bottom: 36px;
+      }
+      .tl-time { font-size: 16px; }
+      .tl-emoji { font-size: 18px; }
+      .tl-ev { font-size: 17px; }
+      .tl-desc { font-size: 11px; }
+
+      /* ─ Dresscode / palette ─ */
+      .dc-note { font-size: 16px; margin-bottom: 40px; }
+      .palette { gap: 10px; }
+      .swatch {
+        width: 52px; height: 72px;
+      }
+      .swatch-name { font-size: 9px; letter-spacing: .08em; }
+      .dc-avoid { font-size: 11px; }
+
+      /* ─ RSVP ─ */
+      .rsvp-form { padding: 0 4px; }
+      .rsvp-inp { padding: 13px 14px; font-size: 14px; }
+      .rsvp-opt { font-size: 13px; padding: 14px 8px; min-height: 44px; }
+      .rsvp-go { font-size: 11px; letter-spacing: .18em; padding: 14px; }
+      .rsvp-ok { font-size: 36px; }
+
+      /* ─ Fisheye portals ─ */
+      .fisheye-row { gap: 16px; margin: 36px auto 48px; }
+      .fisheye-portal { width: 140px; height: 140px; }
+      .fisheye-solo   { width: 180px; height: 180px; }
+
+      /* ─ Footer ─ */
+      footer { padding: 48px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── EDIT BAR ─────────────────────────────────────────── -->
+<div id="editBar">
+  <button id="editBtn" onclick="toggleEdit()">✏️ Редактировать</button>
+  <button id="saveBtn" onclick="saveChanges()" style="display:none">💾 Сохранить</button>
+  <span class="status" id="editStatus"></span>
+</div>
+
+<!-- ══ INTRO ══════════════════════════════════════════════ -->
+<a id="intro" href="javascript:void(0)" onclick="openSite()">
+  <div class="env-glow"></div>
+  <p class="intro-pre">для вас</p>
+  <div class="env-wrap">
+    <svg width="130" height="96" viewBox="0 0 130 96" fill="none">
+      <rect x="4" y="22" width="122" height="70" rx="3"
+        stroke="#A8C8DA" stroke-width="1.8" fill="rgba(201,165,101,.04)"/>
+      <path d="M4 22 L65 62 L126 22" stroke="#A8C8DA" stroke-width="1.8" fill="none" stroke-linejoin="round"/>
+      <path d="M4 22 L65 4 L126 22" stroke="#A8C8DA" stroke-width="1.2"
+        fill="rgba(201,165,101,.08)" stroke-linejoin="round"/>
+      <circle cx="65" cy="64" r="7" stroke="#A8C8DA" stroke-width="1.2" fill="rgba(201,165,101,.15)"/>
+      <text x="65" y="68" text-anchor="middle" font-size="8" fill="#A8C8DA" font-family="serif">♡</text>
+    </svg>
+  </div>
+  <p class="intro-name">Приглашение</p>
+  <p class="intro-hint">коснитесь, чтобы открыть</p>
+  <span class="intro-open-btn">Открыть ♡</span>
+</a>
+
+<!-- ══ MAIN ═══════════════════════════════════════════════ -->
+<div id="main">
+
+  <!-- ── HERO ──────────────────────────────────────────── -->
+  <section id="hero">
+    <div id="hero-bg"></div>
+    <div id="hero-overlay"></div>
+    <canvas id="particleCanvas"></canvas>
+    <div class="hero-body">
+      <p class="hero-pre reveal">14 · августа · 2026</p>
+      <div class="reveal d1">
+        <span class="hero-n1">ВАЛЕРИЯ</span>
+        <span class="hero-amp">&amp;</span>
+        <span class="hero-n2">НИКИТА</span>
+      </div>
+      <p class="hero-sub reveal d2">7 лет вместе</p>
+      <p class="hero-tag reveal d3">«и целая жизнь впереди»</p>
+    </div>
+    <div class="hero-scroll">
+      <span>листайте</span>
+      <div class="scroll-bar"></div>
+    </div>
+  </section>
+
+  <!-- ── RINGS ─────────────────────────────────────────── -->
+  <section id="sec-rings">
+    <div id="rings-bg">
+      <!-- liquid-glass bokeh blobs -->
+      <svg class="liquid-rings-svg" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <radialGradient id="rg1" cx="38%" cy="36%">
+            <stop offset="0%"   stop-color="#C8DDE8" stop-opacity=".95"/>
+            <stop offset="45%"  stop-color="#9B7A5A" stop-opacity=".55"/>
+            <stop offset="100%" stop-color="#A8C8DA" stop-opacity=".7"/>
+          </radialGradient>
+          <radialGradient id="rg2" cx="62%" cy="64%">
+            <stop offset="0%"   stop-color="#EDE4D3" stop-opacity=".95"/>
+            <stop offset="45%"  stop-color="#7A5540" stop-opacity=".5"/>
+            <stop offset="100%" stop-color="#C8DDE8" stop-opacity=".65"/>
+          </radialGradient>
+          <radialGradient id="shineL" cx="28%" cy="22%">
+            <stop offset="0%"  stop-color="#fff" stop-opacity=".7"/>
+            <stop offset="60%" stop-color="#fff" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="shineR" cx="28%" cy="22%">
+            <stop offset="0%"  stop-color="#fff" stop-opacity=".6"/>
+            <stop offset="60%" stop-color="#fff" stop-opacity="0"/>
+          </radialGradient>
+          <filter id="softGlowF" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="10" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="blob" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="28"/>
+          </filter>
+        </defs>
+        <!-- background bokeh blobs -->
+        <ellipse cx="200" cy="220" rx="180" ry="160" fill="rgba(168,200,218,.22)" filter="url(#blob)"/>
+        <ellipse cx="600" cy="380" rx="160" ry="140" fill="rgba(155,122,90,.18)"  filter="url(#blob)"/>
+        <ellipse cx="400" cy="300" rx="200" ry="180" fill="rgba(200,221,232,.15)" filter="url(#blob)"/>
+        <!-- Ring 1 -->
+        <g style="animation:ringBreath 6s ease-in-out infinite">
+          <circle cx="320" cy="300" r="130" fill="none" stroke="url(#rg1)" stroke-width="28"
+            filter="url(#softGlowF)" opacity=".92"/>
+          <circle cx="320" cy="300" r="130" fill="none" stroke="url(#shineL)" stroke-width="28" opacity=".5"
+            stroke-dasharray="180 640" stroke-dashoffset="-60"/>
+        </g>
+        <!-- Ring 2 -->
+        <g style="animation:ringBreath2 6s ease-in-out infinite .5s">
+          <circle cx="480" cy="300" r="130" fill="none" stroke="url(#rg2)" stroke-width="28"
+            filter="url(#softGlowF)" opacity=".88"/>
+          <circle cx="480" cy="300" r="130" fill="none" stroke="url(#shineR)" stroke-width="28" opacity=".45"
+            stroke-dasharray="180 640" stroke-dashoffset="-60"/>
+        </g>
+        <!-- centre glow -->
+        <ellipse cx="400" cy="300" rx="50" ry="38" fill="rgba(255,255,255,.18)" filter="url(#blob)"/>
+      </svg>
+    </div>
+    <div id="rings-overlay"></div>
+    <div class="rings-body">
+      <p class="rings-script reveal" contenteditable="false">это по любви...</p>
+      <p class="rings-counter reveal d1">семь лет вместе · и это только начало</p>
+      <div class="rings-rule reveal d2"></div>
+      <p class="rings-quote reveal d3" contenteditable="false">
+        Семь лет — это не просто цифра.<br>
+        Это утренний кофе, тихие вечера,<br>
+        тысяча маленьких радостей<br>
+        и одна большая, настоящая любовь.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── CHILDHOOD ─────────────────────────────────────── -->
+  <section id="sec-childhood">
+    <p class="sec-eyebrow reveal">история одной любви</p>
+    <h2 class="sec-title reveal d1">Узнаёте этих малышей?</h2>
+    <p class="sec-sub reveal d2">
+      Они росли далеко друг от друга,<br>
+      не зная, что судьба уже всё решила за них...
+    </p>
+
+    <div class="child-grid">
+      <div class="child-col reveal-l">
+        <p class="child-label">Никитусик</p>
+        <div class="polaroid pol-tl">
+          <img loading="lazy" src="airbrush-image-enhancer-1782238487978-1782238487979.jpg"
+               alt="Вюсал в детстве">
+          <span class="pol-cap">маленький Никитосик 👋</span>
+        </div>
+        <div class="polaroid pol-bl">
+          <img loading="lazy" src="airbrush-image-enhancer-1782239983659-1782239983659.jpg"
+               alt="Вюсал с котом">
+          <span class="pol-cap">котик и его друг 🐱</span>
+        </div>
+      </div>
+
+      <div class="child-col reveal-r">
+        <p class="child-label">Лерусик</p>
+        <div class="polaroid pol-tr">
+          <img loading="lazy" src="airbrush-image-enhancer-1782241064427-1782241064427.jpg"
+               alt="Джейран в детстве">
+          <span class="pol-cap">маленькая Лёсик ☀️</span>
+        </div>
+        <div class="polaroid pol-br">
+          <img loading="lazy" src="airbrush-image-enhancer-1782241163483-1782241163483.jpg"
+               alt="Джейран в детстве">
+          <span class="pol-cap">солнечный день 🤍</span>
+        </div>
+      </div>
+
+      <div class="bridge reveal">
+        <div class="bridge-rule"></div>
+        <p class="bridge-text" contenteditable="false">
+          А потом случилось что-то важное —<br>
+          их пути пересеклись, и всё изменилось навсегда
+        </p>
+        <p class="bridge-year" contenteditable="false">2019</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── STORY ─────────────────────────────────────────── -->
+  <section id="sec-story">
+    <p class="sec-eyebrow reveal">предыстория</p>
+    <h2 class="sec-title reveal d1">Как это всё началось</h2>
+
+    <div class="story-ornament reveal d2">
+      <svg width="160" height="28" viewBox="0 0 160 28" fill="none">
+        <path d="M0 14 Q40 2 80 14 Q120 26 160 14" stroke="#9B7A5A" stroke-width="1.2" fill="none"/>
+        <circle cx="80" cy="14" r="3.5" fill="#9B7A5A" opacity=".5"/>
+        <circle cx="40" cy="8"  r="2"   fill="#9B7A5A" opacity=".3"/>
+        <circle cx="120" cy="20" r="2"  fill="#9B7A5A" opacity=".3"/>
+      </svg>
+    </div>
+
+    <div class="story-prose">
+
+      <p class="story-p reveal">
+        Знаете, как бывает — листаешь ленту, и вдруг
+        что-то заставляет тебя остановиться. Не знаешь почему.
+        Просто смотришь — и не можешь уйти.
+        Именно так Никита увидел её фотографию.
+        Обычный вечер, обычная лента —
+        и <em>она</em>. С того момента что-то внутри него
+        тихо и навсегда изменилось.
+      </p>
+
+      <p class="story-p reveal d1">
+        Он не решался написать. Долго сидел, смотрел на экран,
+        закрывал телефон и снова открывал.
+        Наверное, сердце уже знало, что это важно —
+        поэтому и боялось. Но в один день
+        он просто решился. И написал самое короткое,
+        самое робкое, самое смелое слово:
+      </p>
+
+      <span class="story-big-quote reveal d2">«Привет»</span>
+
+      <p class="story-p reveal d1">
+        Она ответила. И мир правда стал чуть теплее —
+        не метафора, а именно так.
+        Через несколько дней они встретились, гуляли,
+        говорили обо всём и ни о чём, смеялись —
+        так легко, будто давно знали друг друга.
+        А когда пришло время прощаться и они поцеловались,
+        внутри у обоих всё перевернулось.
+        Он понял, что это <em>она</em>.
+        Она поняла, что он — <em>не такой, как все</em>.
+        Настоящий. Её.
+      </p>
+
+      <div class="story-rule reveal d2">
+        <div class="story-rule-line"></div>
+        <div class="story-rule-dot"></div>
+        <div class="story-rule-line"></div>
+      </div>
+
+      <p class="story-p reveal">
+        С того дня они — одно целое. Немного сумасшедшие,
+        совершенно родные, как Шрек и Фиона — смешные и настоящие.
+        Их путь не был ровным: были расстояния,
+        которые разрывали, были ссоры, после которых
+        мирились крепче, были ночи, когда казалось — всё.
+        Но каждый раз любовь оказывалась сильнее.
+        Они возвращались друг к другу —
+        <em>потому что не могли иначе</em>.
+        Потому что вместе — это и есть дом.
+      </p>
+
+      <p class="story-closing reveal d1" contenteditable="false">
+        Семь лет. Семь лет смеха и слёз, поездок и ссор,
+        объятий и тишины, в которой хорошо вдвоём.
+        И вот они стоят здесь — и выбирают друг друга.
+        Не потому что так положено.
+        А потому что <em>иначе просто невозможно</em>.
+        Потому что этот человек рядом —
+        и есть вся их жизнь.
+      </p>
+
+      <p class="story-flame reveal d2">
+        Тот огонь, что вспыхнул от одной фотографии,
+        горит в них до сих пор. И с каждым годом — ярче.
+      </p>
+
+    </div>
+  </section>
+
+  <!-- ── GALLERY ────────────────────────────────────────── -->
+  <section id="sec-gallery">
+    <div class="bokeh-wrap">
+      <div class="orb" style="width:340px;height:340px;top:5%;left:-10%;--dur:9s;--del:0s"></div>
+      <div class="orb" style="width:240px;height:240px;top:55%;right:2%;--dur:12s;--del:2.5s"></div>
+      <div class="orb" style="width:180px;height:180px;bottom:10%;left:38%;--dur:7s;--del:1.2s"></div>
+    </div>
+    <p class="sec-eyebrow reveal">7 лет на двоих</p>
+    <h2 class="sec-title shimmer reveal d1">Моменты, которые не забудешь</h2>
+    <p class="sec-sub reveal d2">
+      Горы, рассветы, смешные селфи —<br>это и есть мы
+    </p>
+
+    <div class="g-wrap">
+      <div class="g-track" id="gTrack">
+        <div class="g-slide">
+          <img loading="lazy" src="wcegobqknal4oc3rmpleie118o8obauexbwgdmxxaiulkteldde8qqqdutjnefi6illn0pjxdid0tg0d01___qto.jpg"
+               alt="Вместе">
+          <div class="g-shade"></div>
+        </div>
+        <div class="g-slide">
+          <img loading="lazy" src="airbrush-image-enhancer-1782241368814-1782241368814.jpg"
+               alt="На вершине">
+          <div class="g-shade"></div>
+        </div>
+        <div class="g-slide">
+          <img loading="lazy" src="je68ra3axodvyrii0wjpgtkdvb_9rmgl-c9we4-ubmau8g9mypc5m9naxgwsjnibssv7b-xukstwyvtgf7czuzpm.jpg"
+               alt="На воде">
+          <div class="g-shade"></div>
+        </div>
+        <div class="g-slide">
+          <img loading="lazy" src="rfjjoci3e06qhchjvlswlip1euijb9araqz6x67vgltfipojf4m67leksmj-ysofw9xrkvt7uzotzqgopgbg84dh.jpg"
+               alt="Мы">
+          <div class="g-shade"></div>
+        </div>
+        <div class="g-slide">
+          <img loading="lazy" src="cl8ymqqd-_5vabyqnvaseecsrozihg2j_ue5kdc6azd3v6gfuyhxuws8krncdpgvwc5igvjiewq_mmxvyd4olm9x.jpg"
+               alt="Рядом">
+          <div class="g-shade"></div>
+        </div>
+        <div class="g-slide">
+          <img loading="lazy" src="iyrgo7uuhbabczhbrl6rgudgknahbqzgwcqw9lvvhumxbmpatdmtfnxzxr_wbt_lq_v3lilfqxjm5zda8wgpy5xl.jpg"
+               alt="Радость">
+          <div class="g-shade"></div>
+        </div>
+        <div class="g-slide">
+          <img loading="lazy" src="z1z3mbvpkznvhaqhpuzhad2fn5vskyows2tzne_nauacdsqdcr9jqhoxzulmfjv33bk57omsa2n8huk_m_syrost.jpg"
+               alt="Наши дни">
+          <div class="g-shade"></div>
+        </div>
+        <div class="g-slide">
+          <img loading="lazy" src="2szsr7tzohmtoodohz-8rno22k48tmtyoohl64hssabe81j_nlv2bpwen4g40udkbeqbuthemuhigs26yug7ekuy.jpg"
+               alt="Кольцо">
+          <div class="g-shade"></div>
+        </div>
+        <div class="g-slide">
+          <img loading="lazy" src="ibiyfbucalc3ubkh04qn7z0p993mdr3ezpdc1nano7xtbek2vvn0uc8v2lpr22pod0upurky91xpvjb995patg4e.jpg"
+               alt="Бассейн">
+          <div class="g-shade"></div>
+        </div>
+        <div class="g-slide">
+          <img loading="lazy" src="mnpuxuvmtmbbld0odjcfb0_thulk8nzjyt4j9wteg-ejkuvo5xwetl_fyctc9cqisn4l2sbrp6_nkfmu2p3igviv.jpg"
+               alt="Вместе в пути">
+          <div class="g-shade"></div>
+        </div>
+        <div class="g-slide">
+          <img loading="lazy" src="0tdt9yd9d3nfcamrg0jgdajc5npqs50jrgtxo4wv2qhv-yd9c763f5hpsyknvuyjje8hn8lrrboqq8xo1yxbik-j.jpg"
+               alt="Поцелуй на горе">
+          <div class="g-shade"></div>
+        </div>
+      </div>
+    </div>
+    <p class="g-hint reveal">← потяните для просмотра →</p>
+  </section>
+
+  <!-- ── INVITATION ─────────────────────────────────────── -->
+  <section id="sec-invite">
+    <div class="inv-orn reveal">
+      <svg viewBox="0 0 110 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 18 Q27.5 4 55 18 Q82.5 32 110 18" stroke="#9B7A5A" stroke-width="1.5" fill="none"/>
+        <circle cx="55" cy="18" r="4" fill="#9B7A5A" opacity=".45"/>
+        <circle cx="18"  cy="12" r="2" fill="#9B7A5A" opacity=".3"/>
+        <circle cx="92"  cy="24" r="2" fill="#9B7A5A" opacity=".3"/>
+        <path d="M4 18 Q8 10 12 18" stroke="#9B7A5A" stroke-width="1" fill="none" opacity=".3"/>
+        <path d="M98 18 Q102 10 106 18" stroke="#9B7A5A" stroke-width="1" fill="none" opacity=".3"/>
+      </svg>
+    </div>
+    <h2 class="inv-title reveal" contenteditable="false">Дорогие наши родные и близкие</h2>
+    <div class="inv-divider reveal d1">
+      <div class="inv-divider-line"></div>
+      <span style="color:var(--terra);font-size:16px">♡</span>
+      <div class="inv-divider-line"></div>
+    </div>
+    <p class="inv-text reveal d2" contenteditable="false">
+      Есть люди, без которых большие моменты теряют свой смысл.
+      Вы — именно такие люди для нас.<br><br>
+      Мы прошли долгий и прекрасный путь, прежде чем решились
+      на этот шаг. И в день, когда мы наконец скажем друг другу «да» —
+      мы хотим видеть рядом тех, кто был с нами всегда:
+      в радости и в трудностях, в смехе и в тишине.<br><br>
+      Это приглашение — не формальность. Это наше <em>«мы очень вас любим»</em>,
+      написанное между строк. Потому что для нас
+      <em>каждый гость — это часть нашего сердца</em>,
+      и праздник без вас был бы просто красивым, но не настоящим.
+    </p>
+    <div class="inv-divider reveal d2" style="margin-top:36px">
+      <div class="inv-divider-line"></div>
+      <span style="color:var(--terra);font-size:16px">♡</span>
+      <div class="inv-divider-line"></div>
+    </div>
+    <p class="inv-text reveal d3" style="margin-top:8px;font-style:italic" contenteditable="false">
+      Мы ждём вас с нетерпением.
+    </p>
+    <p class="inv-sig reveal d3" contenteditable="false">С любовью, ваши Лера и Никита</p>
+  </section>
+
+  <!-- ── DATE ──────────────────────────────────────────── -->
+  <section id="sec-date">
+    <div class="bokeh-wrap">
+      <div class="orb" style="width:400px;height:400px;top:-5%;right:-10%;--dur:13s;--del:0s"></div>
+      <div class="orb" style="width:260px;height:260px;bottom:10%;left:5%;--dur:10s;--del:3s"></div>
+    </div>
+    <p class="sec-eyebrow reveal">сохраните дату</p>
+    <div class="reveal d1">
+      <span class="date-num" contenteditable="false">14</span>
+      <span class="date-my" contenteditable="false">Августа · 2026</span>
+    </div>
+
+    <div class="countdown reveal d2">
+      <div class="cd-block">
+        <span class="cd-num" id="cdD">—</span>
+        <span class="cd-lbl">дней</span>
+      </div>
+      <span class="cd-sep">:</span>
+      <div class="cd-block">
+        <span class="cd-num" id="cdH">—</span>
+        <span class="cd-lbl">часов</span>
+      </div>
+      <span class="cd-sep">:</span>
+      <div class="cd-block">
+        <span class="cd-num" id="cdM">—</span>
+        <span class="cd-lbl">минут</span>
+      </div>
+      <span class="cd-sep">:</span>
+      <div class="cd-block">
+        <span class="cd-num" id="cdS">—</span>
+        <span class="cd-lbl">секунд</span>
+      </div>
+    </div>
+
+    <div class="cal-box reveal d3">
+      <p class="cal-title">Август 2026</p>
+      <div class="cal-head">
+        <span>ПН</span><span>ВТ</span><span>СР</span><span>ЧТ</span>
+        <span>ПТ</span><span>СБ</span><span>ВС</span>
+      </div>
+      <div class="cal-body">
+        <!-- Aug 2026 starts Saturday → 5 empty Mon–Fri -->
+        <div class="c-day"></div><div class="c-day"></div><div class="c-day"></div>
+        <div class="c-day"></div><div class="c-day"></div>
+        <div class="c-day">1</div><div class="c-day">2</div>
+        <div class="c-day">3</div><div class="c-day">4</div><div class="c-day">5</div>
+        <div class="c-day">6</div><div class="c-day">7</div><div class="c-day">8</div>
+        <div class="c-day">9</div>
+        <div class="c-day">10</div><div class="c-day">11</div><div class="c-day">12</div>
+        <div class="c-day">13</div>
+        <div class="c-day hi">14</div>
+        <div class="c-day">15</div><div class="c-day">16</div>
+        <div class="c-day">17</div><div class="c-day">18</div><div class="c-day">19</div>
+        <div class="c-day">20</div><div class="c-day">21</div><div class="c-day">22</div>
+        <div class="c-day">23</div>
+        <div class="c-day">24</div><div class="c-day">25</div><div class="c-day">26</div>
+        <div class="c-day">27</div><div class="c-day">28</div><div class="c-day">29</div>
+        <div class="c-day">30</div>
+        <div class="c-day">31</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── VENUE ─────────────────────────────────────────── -->
+  <section id="sec-venue">
+    <p class="sec-eyebrow reveal">где нас найти</p>
+    <h2 class="sec-title reveal d1">Место проведения</h2>
+
+    <div class="reveal d2" style="margin:0 auto 28px;width:44px">
+      <svg width="44" height="52" viewBox="0 0 44 52" fill="none">
+        <path d="M22 4C14.268 4 8 10.268 8 18C8 29 22 48 22 48C22 48 36 29 36 18C36 10.268 29.732 4 22 4Z"
+          stroke="#9B7A5A" stroke-width="1.5" fill="none"/>
+        <circle cx="22" cy="18" r="5.5" stroke="#9B7A5A" stroke-width="1.5" fill="none"/>
+      </svg>
+    </div>
+
+    <p class="venue-name reveal d2" contenteditable="false">Нижегородский Дом бракосочетания</p>
+    <p class="venue-addr reveal d3" contenteditable="false">
+      г. Нижний Новгород, ул. Малая Покровская, д. 9<br>
+      Начало сбора гостей в 11:00
+    </p>
+    <a href="#" class="venue-btn reveal d4" contenteditable="false">Открыть карту</a>
+  </section>
+
+  <!-- ── TIMELINE ───────────────────────────────────────── -->
+  <section id="sec-timing">
+    <p class="sec-eyebrow reveal">план торжества</p>
+    <h2 class="sec-title reveal d1">Тайминг дня</h2>
+    <p class="sec-sub reveal d2">Каждый момент продуман с любовью</p>
+
+    <ul class="timeline">
+      <li class="tl-row reveal">
+        <span class="tl-time" contenteditable="false">11:00</span>
+        <div class="tl-mid"><div class="tl-dot"></div></div>
+        <div class="tl-body">
+          <span class="tl-emoji">🌿</span>
+          <p class="tl-ev" contenteditable="false">Сбор и встреча гостей</p>
+          <p class="tl-desc" contenteditable="false">Добро пожаловать! Игристое в ожидании главного</p>
+        </div>
+      </li>
+      <li class="tl-row reveal d1">
+        <span class="tl-time" contenteditable="false">11:25</span>
+        <div class="tl-mid"><div class="tl-dot"></div></div>
+        <div class="tl-body">
+          <span class="tl-emoji">💍</span>
+          <p class="tl-ev" contenteditable="false">Торжественная регистрация</p>
+          <p class="tl-desc" contenteditable="false">Самый главный момент — клятвы, кольца и слёзы радости</p>
+        </div>
+      </li>
+      <li class="tl-row reveal d2">
+        <span class="tl-time" contenteditable="false">12:00</span>
+        <div class="tl-mid"><div class="tl-dot"></div></div>
+        <div class="tl-body">
+          <span class="tl-emoji">📸</span>
+          <p class="tl-ev" contenteditable="false">Фотосессия</p>
+          <p class="tl-desc" contenteditable="false">Фотограф ловит самые искренние кадры этого дня</p>
+        </div>
+      </li>
+      <li class="tl-row reveal d3">
+        <span class="tl-time" contenteditable="false">14:30</span>
+        <div class="tl-mid"><div class="tl-dot"></div></div>
+        <div class="tl-body">
+          <span class="tl-emoji">🥂</span>
+          <p class="tl-ev" contenteditable="false">Приглашаем к столу</p>
+          <p class="tl-desc" contenteditable="false">Начало банкета — тосты, смех и тепло самых близких</p>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ── DRESSCODE ────────────────────────────────────────── -->
+  <section id="sec-dresscode">
+    <p class="sec-eyebrow reveal">дресс-код</p>
+    <h2 class="sec-title reveal d1">Цветовая палитра</h2>
+    <p class="sec-sub reveal d2">
+      Нам было бы очень приятно, если вы поддержите наши цвета
+    </p>
+
+    <p class="dc-note reveal d2">
+      Нам будет очень приятно, если вы поддержите наши цвета
+      и выберете наряд в <em>голубых, нюдовых или пастельных тонах</em>.
+      Это сделает наш праздник ещё более нежным и красивым —
+      и наши общие фотографии останутся с нами навсегда
+      именно такими: воздушными, тёплыми, настоящими.
+    </p>
+
+    <div class="palette reveal d3">
+      <div class="swatch-wrap">
+        <div class="swatch" style="background:#B8D0E3"></div>
+        <span class="swatch-name">небесный</span>
+      </div>
+      <div class="swatch-wrap">
+        <div class="swatch" style="background:#9FBDD4"></div>
+        <span class="swatch-name">пудровый синий</span>
+      </div>
+      <div class="swatch-wrap">
+        <div class="swatch" style="background:#C8D8E8"></div>
+        <span class="swatch-name">ледяной</span>
+      </div>
+      <div class="swatch-wrap">
+        <div class="swatch" style="background:#C9BFD4"></div>
+        <span class="swatch-name">лаванда</span>
+      </div>
+      <div class="swatch-wrap">
+        <div class="swatch" style="background:#DDD0C8"></div>
+        <span class="swatch-name">нюд</span>
+      </div>
+      <div class="swatch-wrap">
+        <div class="swatch" style="background:#E8DDD4"></div>
+        <span class="swatch-name">молочный</span>
+      </div>
+    </div>
+
+    <p class="dc-avoid reveal d4">
+      Просим воздержаться от <span>белого и чёрного</span>
+    </p>
+  </section>
+
+  <!-- ── RSVP ──────────────────────────────────────────── -->
+  <section id="sec-rsvp">
+    <div class="bokeh-wrap">
+      <div class="orb" style="width:300px;height:300px;top:0%;left:-5%;--dur:10s;--del:1s"></div>
+      <div class="orb" style="width:200px;height:200px;bottom:5%;right:8%;--dur:8s;--del:0s"></div>
+    </div>
+    <p class="sec-eyebrow reveal">ваш ответ</p>
+    <h2 class="sec-title shimmer reveal d1">Подтвердите участие</h2>
+    <p class="sec-sub reveal d2">Мы хотим быть готовы к вашему приходу</p>
+    <p class="rsvp-deadline reveal d3" contenteditable="false">пожалуйста, ответьте до 1 августа 2026</p>
+
+    <form class="rsvp-form reveal d4" id="rsvpForm" onsubmit="submitRsvp(event)">
+      <input type="hidden" name="Придёт" id="attendanceField" value="Да, приду с радостью">
+      <input class="rsvp-inp" type="text" name="Имя" placeholder="Ваше имя" required>
+      <input class="rsvp-inp" type="text" name="Телефон" placeholder="Телефон или WhatsApp (по желанию)">
+      <div class="rsvp-row">
+        <button type="button" class="rsvp-opt sel" onclick="pickAtt(this,'Да, приду с радостью')">Приду с радостью ✓</button>
+        <button type="button" class="rsvp-opt" onclick="pickAtt(this,'К сожалению, не смогу')">К сожалению, нет</button>
+      </div>
+      <input class="rsvp-inp" type="text" name="Пожелание" placeholder="Пожелание молодым (по желанию)">
+      <button type="submit" class="rsvp-go">Отправить</button>
+    </form>
+    <p class="rsvp-ok" id="rsvpOk">Получили! Ждём вас ♡</p>
+  </section>
+
+  <!-- ── FOOTER ─────────────────────────────────────────── -->
+  <footer>
+    <p class="ft-names">Валерия &amp; Никита</p>
+    <p class="ft-heart">♡</p>
+    <p class="ft-date">14 · 08 · 2026</p>
+  </footer>
+
+</div><!-- #main -->
+
+<script>
+/* ── BG IMAGES ─────────────────────────────────────────── */
+/* Set background images via JS to avoid CSS URL encoding issues */
+document.getElementById('hero-bg').style.backgroundImage =
+  "url('airbrush-image-enhancer-1782241368814-1782241368814.jpg')";
+
+
+/* ── OPEN SITE ─────────────────────────────────────────── */
+function openSite() {
+  const intro = document.getElementById('intro');
+  if (!intro || intro.classList.contains('gone')) return;
+  intro.classList.add('gone');
+  try {
+    const main = document.getElementById('main');
+    main.classList.add('on');
+    initParticles();
+    setTimeout(() => {
+      const bg = document.getElementById('hero-bg');
+      if (bg) bg.classList.add('loaded');
+    }, 80);
+    triggerReveal();
+  } catch(e) { /* silent — visuals still work via CSS */ }
+}
+
+
+/* ── PARTICLES ─────────────────────────────────────────── */
+function initParticles() {
+  const canvas = document.getElementById('particleCanvas');
+  const hero   = document.getElementById('hero');
+  function resize() {
+    canvas.width  = hero.offsetWidth;
+    canvas.height = hero.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const ctx = canvas.getContext('2d');
+  const pts = Array.from({length: 140}, () => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    r: Math.random() * 1.8 + .4,
+    vx: (Math.random() - .5) * .25,
+    vy: Math.random() * .35 + .15,
+    o: Math.random() * .55 + .08,
+  }));
+
+  (function loop() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    pts.forEach(p => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(201,165,101,${p.o})`;
+      ctx.fill();
+      p.x += p.vx; p.y += p.vy;
+      if (p.y > canvas.height) { p.y = -4; p.x = Math.random() * canvas.width; }
+      if (p.x < 0) p.x = canvas.width;
+      if (p.x > canvas.width) p.x = 0;
+    });
+    requestAnimationFrame(loop);
+  })();
+}
+
+/* ── SCROLL REVEAL ─────────────────────────────────────── */
+function triggerReveal() {
+  const els = document.querySelectorAll('.reveal, .reveal-l, .reveal-r');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -4% 0px' });
+  els.forEach(el => io.observe(el));
+
+  /* ── Mobile fix: force-reveal elements already in viewport ── */
+  function forceVisible() {
+    els.forEach(el => {
+      const r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight * 1.05 && r.bottom > 0) {
+        el.classList.add('on');
+        io.unobserve(el);
+      }
+    });
+  }
+  setTimeout(forceVisible, 80);
+  setTimeout(forceVisible, 350);
+  setTimeout(forceVisible, 800);
+}
+
+/* ── GALLERY DRAG ──────────────────────────────────────── */
+const gTrack = document.getElementById('gTrack');
+let dragging = false, startX = 0, scrollL = 0;
+gTrack.addEventListener('mousedown', e => {
+  dragging = true; startX = e.pageX; scrollL = gTrack.scrollLeft;
+  gTrack.style.userSelect = 'none';
+});
+window.addEventListener('mouseup', () => { dragging = false; gTrack.style.userSelect = ''; });
+gTrack.addEventListener('mousemove', e => {
+  if (!dragging) return;
+  gTrack.scrollLeft = scrollL - (e.pageX - startX) * 1.4;
+});
+let tx = 0, ts = 0;
+gTrack.addEventListener('touchstart', e => { tx = e.touches[0].pageX; ts = gTrack.scrollLeft; });
+gTrack.addEventListener('touchmove', e => {
+  e.preventDefault();
+  gTrack.scrollLeft = ts - (e.touches[0].pageX - tx) * 1.2;
+}, { passive: false });
+
+/* ── COUNTDOWN ─────────────────────────────────────────── */
+function tick() {
+  const target = new Date('2026-08-14T15:00:00');
+  const diff   = target - new Date();
+  if (diff <= 0) {
+    ['cdD','cdH','cdM','cdS'].forEach(id => document.getElementById(id).textContent = '0');
+    return;
+  }
+  document.getElementById('cdD').textContent = Math.floor(diff / 86400000);
+  document.getElementById('cdH').textContent = String(Math.floor((diff % 86400000) / 3600000)).padStart(2,'0');
+  document.getElementById('cdM').textContent = String(Math.floor((diff %  3600000) /   60000)).padStart(2,'0');
+  document.getElementById('cdS').textContent = String(Math.floor((diff %    60000) /    1000)).padStart(2,'0');
+}
+tick(); setInterval(tick, 1000);
+
+/* ── RSVP ──────────────────────────────────────────────── */
+function pickAtt(btn, val) {
+  document.querySelectorAll('.rsvp-opt').forEach(b => b.classList.remove('sel'));
+  btn.classList.add('sel');
+  document.getElementById('attendanceField').value = val;
+}
+function submitRsvp(e) {
+  e.preventDefault();
+  const fd = new FormData(e.target);
+  const btn = e.target.querySelector('.rsvp-go');
+  btn.disabled = true;
+  btn.textContent = 'Отправляем...';
+  fetch('https://formsubmit.co/ajax/woorldmun@gmail.com', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify({
+      Имя:       fd.get('Имя') || '—',
+      Телефон:   fd.get('Телефон') || '—',
+      Придёт:    fd.get('Придёт') || '—',
+      Пожелание: fd.get('Пожелание') || '—',
+      _subject:  '🎊 RSVP — Свадьба Никиты и Валерии 14.08.2026',
+      _template: 'table',
+      _captcha:  'false'
+    })
+  })
+  .finally(() => {
+    document.getElementById('rsvpForm').style.display = 'none';
+    document.getElementById('rsvpOk').style.display   = 'block';
+  });
+}
+
+/* ── EDIT MODE ─────────────────────────────────────────── */
+let editing = false;
+function toggleEdit() {
+  editing = !editing;
+  document.body.classList.toggle('editing', editing);
+  document.querySelectorAll('[contenteditable]').forEach(el => {
+    el.contentEditable = editing;
+  });
+  document.getElementById('editBtn').textContent = editing ? '✕ Выйти' : '✏️ Редактировать';
+  document.getElementById('saveBtn').style.display = editing ? 'block' : 'none';
+  document.getElementById('editStatus').textContent = editing ? 'Кликайте на текст' : '';
+}
+function saveChanges() {
+  const blob = new Blob([document.documentElement.outerHTML], {type:'text/html'});
+  const a = Object.assign(document.createElement('a'), {
+    href: URL.createObjectURL(blob), download: 'wedding.html'
+  });
+  a.click();
+  document.getElementById('editStatus').textContent = '✓ Сохранено';
+  setTimeout(() => document.getElementById('editStatus').textContent = '', 2500);
+}
+</script>
+</body>
+</html>
